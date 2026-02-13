@@ -178,6 +178,17 @@ main {
   height: 60px;
   border: 1px solid #111;
   background: #fff;
+ 
+}
+.box.is-bouncing {
+  animation: bounce 1s ease-in-out infinite alternate;
+}
+
+@keyframes bounce {
+  0% { transform: translateY(0); }
+  10% { transform: translateX(100px); }
+  100% { transform: translateX(900px);}
+  50% { transform: translateY(-10px); }
 }
 
 .task-area {

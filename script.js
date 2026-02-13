@@ -94,6 +94,35 @@ document.addEventListener("DOMContentLoaded", () => {
     out.textContent=reversed
 
   })
+  //8
+  let inpA = document.querySelector('[data-js="t8-a"]')
+  let inpB = document.querySelector('[data-js="t8-b"]')
+  let btnAdd = document.querySelector('[data-js="t8-add"]')
+  let btnMultip = document.querySelector('[data-js="t8-mul"]')
+  let output = document.querySelector('[data-js="t8-out"]')
+  btnAdd.addEventListener('click', () => {
+    let a = parseFloat(inpA.value)
+    let b = parseFloat(inpB.value)
+    let result = a + b
+    if (isNaN(result)) {
+      output.textContent = 'NaN'
+    } else {
+      output.textContent = result
+    }
+  })
+  btnMultip.addEventListener('click', () => {
+    let a = parseFloat(inpA.value)
+    let b = parseFloat(inpB.value)
+    let result = a * b
+  
+    if (isNaN(result)) {
+      output.textContent = 'NaN'
+    } else {
+      output.textContent = result
+    }
+  })
+
+
   //9
   let btn9=document.querySelector("[data-js='t9-toggle']")
   btn9.addEventListener('click',()=>{
@@ -118,25 +147,74 @@ document.addEventListener("DOMContentLoaded", () => {
   })
   //11
   let inter=0
+  let remainingTime = 0;
   document.querySelector('[data-js="t11-start"]').addEventListener('click',()=>{
-    inter=setInterval(()=>{
-      inp=document.querySelector('[data-js="t11-seconds"]').value
-      inp--
-      outp=document.querySelector('[data-js="t11-out"]').textContent
-      outp==inp
-      if (inp <= 0) {
-      clearInterval(inter);
-    }
-    },1000);
+    clearInterval(inter)
+    let remainingTime=parseInt(document.querySelector('[data-js="t11-seconds"]').value)
+    let outp = document.querySelector('[data-js="t11-out"]');
+    let updateTimer = () => {
+          outp.textContent = remainingTime;
+          if (remainingTime <= 0) {
+              clearInterval(inter);
+              return;
+          }
+          remainingTime--;
+      };
+      updateTimer();
+      inter = setInterval(updateTimer, 1000); 
   })
   document.querySelector('[data-js="t11-stop"]').addEventListener('click',()=>{
     clearInterval(inter);
   })
+   
   //12
   let progres=document.querySelector('[data-js="t12-bar"]')
-  progres.addEventListener('click',()=>{
-    progres.style.width=width+10
-    document.querySelector('[data-js="t12-label"]').textContent =progres+'%'
+  let label=document.querySelector('[data-js="t12-label"]')
+  let plus=document.querySelector('[data-js="t12-plus"]')
+  let currentWidth=0
+  plus.addEventListener('click',()=>{
+    currentWidth += 42;  
+    if (currentWidth > 420) currentWidth = 420;  
+    progres.style.width = currentWidth + 'px'; 
+    label.textContent = currentWidth + 'px'; 
+  })
+  //13
+  let inp=document.querySelector('[data-js="t13-input"]')
+  let ou=document.querySelector('[data-js="t13-out"]')
+  document.addEventListener('keydown',function(event){
+    if(event.ctrlKey && event.key === 'k'){
+      event.preventDefault();
+      inp.value = ''; 
+      inp.focus();  
+      ou.textContent = 'Пишите';
+    }
+    if (event.key === 'Escape') {
+    document.activeElement.blur(); 
+    ou.textContent=inp.value
+    }
+  })
+  //14
+  let btn14=document.querySelector('[data-js="t14-next"]')
+  btn14.addEventListener('click',()=>{
+    const quotes=['Я Матвей лучший','Я Матвей великолепный','Я Матвей превосходный','Я Матвей Макнаггетс']
+    const randomIndex = Math.floor(Math.random() * quotes.length)
+    let outt=document.querySelector('[data-js="t14-out"]')
+    outt.textContent=quotes[randomIndex]
+  })
+  //15
+  let move=document.querySelector('[data-js="t15-item"]')
+  let outXY=document.querySelector('[data-js="t15-coords"]')
+  let area=document.querySelector('[data-js="t15-area"]')
+  move.addEventListener('mousedown',function(e){
+    
+
+
+  })
+  //16
+  let btn16=document.querySelector('[data-js="t16-animate"]')
+  let animatedBox = document.querySelector('[data-js="t16-box"]'); 
+  btn16.addEventListener('click',()=>{
+   animatedBox.classList.toggle('is-bouncing');
   })
   enableTooltips();
 });
