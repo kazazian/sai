@@ -205,11 +205,38 @@ document.addEventListener("DOMContentLoaded", () => {
   let move=document.querySelector('[data-js="t15-item"]')
   let outXY=document.querySelector('[data-js="t15-coords"]')
   let area=document.querySelector('[data-js="t15-area"]')
+  let isDragging = false
+  let shiftX, shiftY 
   move.addEventListener('mousedown',function(e){
-    
-
-
+    shiftX = e.clientX - move.getBoundingClientRect().left
+    shiftY = e.clientY - move.getBoundingClientRect().top
+    area.append(move)
+    isDragging = true
+    e.preventDefault()
   })
+   document.addEventListener('mousemove',function(e){
+    if (!isDragging) return
+    const areaRect = area.getBoundingClientRect();
+    const itemRect = move.getBoundingClientRect();
+    const itemWidth = itemRect.width;
+    const itemHeight = itemRect.height;
+
+    let newLeft = e.clientX - area.getBoundingClientRect().left - shiftX;
+    let newTop = e.clientY - area.getBoundingClientRect().top - shiftY;
+
+    newLeft = Math.max(0, Math.min(newLeft, areaRect.width - itemWidth));
+    newTop = Math.max(0, Math.min(newTop, areaRect.height - itemHeight));
+    
+    move.style.left = newLeft + 'px';
+    move.style.top = newTop + 'px';
+    
+    outXY.textContent = `x: ${Math.round(newLeft)}, y: ${Math.round(areaRect.height - itemHeight - newTop)}`;
+  })
+  document.addEventListener('mouseup', function(e) {
+  isDragging = false
+  })
+
+
   //16
   let btn16=document.querySelector('[data-js="t16-animate"]')
   let animatedBox = document.querySelector('[data-js="t16-box"]'); 
